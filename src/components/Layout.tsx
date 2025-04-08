@@ -10,7 +10,8 @@ import {
 } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-
+import { Link } from "react-router-dom";
+import logo from "../assets/icons/logo.svg";
 interface LayoutProps {
   children: React.ReactNode;
 }
@@ -40,7 +41,7 @@ const Navigation = () => {
                 onClick={() => (window.location.href = "/")}
                 className="flex-shrink-0 flex items-center cursor-pointer"
               >
-                <BookOpenIcon className="h-8 w-8 text-primary-500" />
+                <img src={logo} className="w-[40px]" alt="Logo" />
                 <span className="ml-2 text-xl font-bold text-secondary-900">
                   CourseGPT
                 </span>
@@ -58,6 +59,12 @@ const Navigation = () => {
                   {item.label}
                 </motion.a>
               ))}
+              <Link
+                to="/lessons"
+                className="inline-flex items-center px-6 text-sm  border border-transparent font-medium rounded-md h-[70%] text-white bg-primary-500 hover:bg-primary-600"
+              >
+                Get Started
+              </Link>
             </div>
             <div className="md:hidden flex items-center">
               <motion.button
@@ -107,14 +114,14 @@ const Navigation = () => {
 
 export default function Layout({ children }: LayoutProps) {
   return (
-    <div className="min-h-screen bg-secondary-50">
+    <div>
       <Navigation />
       <main className="pt-16">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
-          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8"
+          className=" mx-auto px-4 sm:px-6 lg:px-8 py-8"
         >
           {children}
         </motion.div>
