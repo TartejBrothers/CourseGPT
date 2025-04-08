@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { LockClosedIcon, EnvelopeIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
+import Spinner from "../elements/Spinner";
 import Cookies from "js-cookie";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -84,10 +85,12 @@ export default function LoginPage() {
             type="submit"
             className="w-full bg-primary-500 text-white font-medium py-2.5 rounded-md hover:bg-primary-600"
           >
-            Log In
+            {loading ? <Spinner /> : <>Log In</>}
           </button>
         </form>
-
+        {error && (
+          <p className="text-red-500 text-sm text-center mt-4">{error}</p>
+        )}
         <p className="text-center text-sm text-secondary-500 mt-4">
           Don’t have an account?{" "}
           <Link to="/signup" className="text-primary-500 hover:underline">
