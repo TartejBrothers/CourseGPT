@@ -9,7 +9,6 @@ import {
 import axios from "axios";
 import Spinner from "../elements/Spinner";
 import { ToastContainer, toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
 export default function SignupPage() {
@@ -17,7 +16,7 @@ export default function SignupPage() {
   const [error, setError] = useState<string | null>(null);
 
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+
   const Base_URL = import.meta.env.VITE_BASE_URL;
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -47,7 +46,7 @@ export default function SignupPage() {
 
       notify("Account Created! Redirecting to dashboard");
       setTimeout(() => {
-        navigate("/dashboard");
+        window.location.href = "/dashboard";
       }, 1500);
     } catch (error) {
       setLoading(false);

@@ -6,11 +6,10 @@ import axios from "axios";
 import Spinner from "../elements/Spinner";
 import Cookies from "js-cookie";
 import { ToastContainer, toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+
 export default function LoginPage() {
   const [error, setError] = React.useState<string | null>(null);
   const [loading, setLoading] = React.useState(false);
-  const navigate = useNavigate();
   const notify = (message: string) => toast.success(message);
   const Base_URL = import.meta.env.VITE_BASE_URL;
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -38,8 +37,9 @@ export default function LoginPage() {
       );
       Cookies.set("token", response.data.token);
       notify("Login Successful! Redirecting to dashboard");
+
       setTimeout(() => {
-        navigate("/dashboard");
+        window.location.href = "/dashboard";
       }, 1500);
     } catch (error) {
       setLoading(false);
