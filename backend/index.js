@@ -26,6 +26,7 @@ app.get("/", (req, res) => {
   res.send("Backend");
 });
 app.use("/api/auth", require("./routes/auth"));
+app.use("/api/ai", require("./routes/ai"));
 
 const connectDB = async () => {
   try {
