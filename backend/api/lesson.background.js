@@ -1,11 +1,12 @@
-const express = require("express");
 const generateLesson = require("../services/generateLesson");
 
-const router = express.Router();
+module.exports = async (req, res) => {
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Method not allowed" });
+  }
 
-router.post("/lesson", async (req, res) => {
-  const { topic } = req.body;
   try {
+    const { topic } = req.body;
     const lesson = await generateLesson(topic);
     res.status(200).json({ lessonPlan: lesson });
   } catch (err) {
@@ -14,6 +15,4 @@ router.post("/lesson", async (req, res) => {
       .status(500)
       .json({ error: err.message || "Failed to generate lesson." });
   }
-});
-
-module.exports = router;
+};
