@@ -60,7 +60,7 @@ const Navigation = () => {
                 </motion.a>
               ))}
               <Link
-                to="/lessons"
+                to="/login"
                 className="inline-flex items-center px-6 text-sm  border border-transparent font-medium rounded-md h-[70%] text-white bg-primary-500 hover:bg-primary-600"
               >
                 Get Started
