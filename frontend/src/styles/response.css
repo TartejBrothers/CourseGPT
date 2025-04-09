@@ -129,7 +129,9 @@
 .responsetext * {
   transition: all 0.2s ease-in-out;
 }
-
+.tiptap {
+  outline: none;
+}
 /* Existing styles remain unchanged above... */
 
 @media screen and (max-width: 768px) {
