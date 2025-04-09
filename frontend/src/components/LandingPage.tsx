@@ -100,71 +100,18 @@ export default function LandingPage() {
               About Us
             </h2>
             <p className="mt-4 text-secondary-600 max-w-2xl mx-auto">
-              We’re a team of educators and technologists passionate about
-              transforming the way learning content is created. With CourseGPT,
-              we aim to make quality education accessible and scalable through
-              smart authoring tools.
+              I’m a solo developer passionate about transforming the way
+              learning content is created. With CourseGPT, I aim to make quality
+              education accessible and scalable through intelligent,
+              user-friendly authoring tools.
             </p>
           </motion.div>
         </section>
 
         {/* Contact Us Section */}
-        <section id="contact" className="mt-32 max-w-2xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="bg-white p-8 rounded-2xl shadow"
-          >
-            <div className="text-center">
-              <EnvelopeIcon className="h-10 w-10 text-primary-500 mx-auto" />
-              <h2 className="mt-4 text-3xl font-bold text-secondary-900">
-                Contact Us
-              </h2>
-              <p className="mt-2 text-secondary-600">
-                Have questions or want to collaborate? Drop us a message.
-              </p>
-            </div>
-            <form className="mt-6 space-y-4">
-              <input
-                type="text"
-                placeholder="Your Name"
-                className="w-full border border-secondary-300 rounded-md p-3 focus:ring-primary-500 focus:border-primary-500"
-              />
-              <input
-                type="email"
-                placeholder="Your Email"
-                className="w-full border border-secondary-300 rounded-md p-3 focus:ring-primary-500 focus:border-primary-500"
-              />
-              <textarea
-                placeholder="Your Message"
-                rows={4}
-                className="w-full border border-secondary-300 rounded-md p-3 focus:ring-primary-500 focus:border-primary-500"
-              />
-              <button
-                type="submit"
-                className="w-full bg-primary-500 text-white font-medium py-3 rounded-md hover:bg-primary-600"
-              >
-                Send Message
-              </button>
-            </form>
-          </motion.div>
-        </section>
       </main>
       <footer className=" border-t border-secondary-200 pt-8 text-center text-sm text-secondary-500 w-full">
         <p>&copy; {new Date().getFullYear()} CourseGPT. All rights reserved.</p>
-        <div className="mt-2 space-x-4">
-          <a href="#features" className="hover:text-secondary-700">
-            Features
-          </a>
-          <a href="#about" className="hover:text-secondary-700">
-            About
-          </a>
-          <a href="#contact" className="hover:text-secondary-700">
-            Contact
-          </a>
-        </div>
       </footer>
     </>
   );
