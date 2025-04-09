@@ -82,16 +82,6 @@ const MenuBar = ({
       >
         <CodeBracketIcon className="h-5 w-5" />
       </motion.button>
-      <motion.button
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        onClick={() => editor.chain().focus().toggleBlockquote().run()}
-        className={`p-2 rounded ${
-          editor.isActive("blockquote") ? "bg-secondary-100" : ""
-        }`}
-      >
-        <ChatBubbleBottomCenterTextIcon className="h-5 w-5" />
-      </motion.button>
 
       <motion.div className="flex-1" />
 
@@ -145,6 +135,7 @@ export default function ContentEditor() {
       const { from, to } = editor.state.selection;
       const text = editor.state.doc.textBetween(from, to, " ");
       setSelectedText(text.trim());
+      console.log("Selected text:", text.trim());
     },
   });
 
