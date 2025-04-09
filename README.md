@@ -215,3 +215,21 @@ az webapp up --name your-app-name --resource-group your-rg-name --runtime "NODE|
 ## 👥 Contributors
 
 - Taranjeet Singh Bedi (Full Stack Developer, UI/UX Designer)
+
+## 🖥️ Screenshots
+
+![readme-1](./images/readme-1.jpg)
+![readme-9](./images/readme-9.jpg)
+![readme-8](./images/readme-8.jpg)
+![readme-7](./images/readme-7.jpg)
+![readme-6](./images/readme-6.jpg)
+![readme-5](./images/readme-5.jpg)
+![readme-4](./images/readme-4.jpg)
+![readme-3](./images/readme-3.jpg)
+![readme-2](./images/readme-2.jpg)
+
+## 🎥 Watch the Demo
+
+[![CourseGPT Demo](./images/readme-1.jpg)](https://youtu.be/j3sZ3LEv-tU)
+
+<p style="text-align:center">Click on the image to watch the demo video</p>
