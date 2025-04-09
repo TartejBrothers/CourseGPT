@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-
+import { BsSearch } from "react-icons/bs";
 import { Bars3Icon, PlusIcon } from "@heroicons/react/24/outline";
 import AddModule from "../elements/addmodule";
 import axios from "axios";
@@ -60,6 +60,15 @@ export default function ModuleOrganizer() {
             Add Module
           </motion.button>
         </div>
+        <div className="flex items-center gap-4 mb-4 w-full flex-1 rounded-xl border border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 px-2 min-h-[38px]">
+          <BsSearch color="#818181" />
+          <input
+            type="text"
+            placeholder="Search for Module Name, Tags or Lessons"
+            className="focus:outline-none focus:ring-0 focus:border-0 w-full"
+          />
+        </div>
+
         <ModuleList modules={modules} />
       </motion.div>
     </div>
