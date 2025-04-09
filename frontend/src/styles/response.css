@@ -5,6 +5,8 @@
   line-height: 1.7;
   padding: 1rem;
   border-radius: 1rem;
+  width: 100%;
+  overflow-x: scroll;
 }
 
 /* Headings */
@@ -126,4 +128,49 @@
 
 .responsetext * {
   transition: all 0.2s ease-in-out;
+}
+
+/* Existing styles remain unchanged above... */
+
+@media screen and (max-width: 768px) {
+  .responsetext {
+    font-size: 0.9rem;
+    padding: 0.75rem;
+  }
+
+  .responsetext h1 {
+    font-size: 1.5rem;
+  }
+
+  .responsetext h2 {
+    font-size: 1.35rem;
+  }
+
+  .responsetext h3 {
+    font-size: 1.2rem;
+  }
+
+  .responsetext h4 {
+    font-size: 1.1rem;
+  }
+
+  .responsetext h5 {
+    font-size: 1rem;
+  }
+
+  .responsetext h6 {
+    font-size: 0.95rem;
+  }
+
+  .responsetext p,
+  .responsetext li,
+  .responsetext th,
+  .responsetext td {
+    font-size: 0.9rem;
+  }
+
+  .responsetext code,
+  .responsetext pre {
+    font-size: 0.8rem;
+  }
 }
