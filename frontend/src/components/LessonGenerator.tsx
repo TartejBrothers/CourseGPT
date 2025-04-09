@@ -8,6 +8,7 @@ import {
 import type { Lesson } from "../types";
 import axios from "axios";
 import "../styles/response.css";
+import ModuleList from "../elements/modulelist";
 import Cookies from "js-cookie";
 export default function LessonGenerator() {
   const [topic, setTopic] = useState("");
