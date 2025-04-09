@@ -57,7 +57,10 @@ export default function ModuleOrganizer() {
     <div className="space-y-8">
       <AddModule
         isVisible={showAddModule}
-        onClose={() => setShowAddModule(false)}
+        onClose={() => {
+          setShowAddModule(false);
+          getModules();
+        }}
       />
       <motion.div
         initial={{ opacity: 0, y: -20 }}

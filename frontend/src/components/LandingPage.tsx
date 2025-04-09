@@ -45,7 +45,7 @@ export default function LandingPage() {
             className="mt-10 flex justify-center space-x-4"
           >
             <Link
-              to="/dashboard"
+              to="/login"
               className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary-500 hover:bg-primary-600"
             >
               Get Started

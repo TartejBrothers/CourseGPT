@@ -3,25 +3,40 @@ const express = require("express");
 const cors = require("cors");
 
 const app = express();
-const port = 5001;
+const port = process.env.PORT || 5001;
 const mongoose = require("mongoose");
 
-app.use(cors());
+app.use(
+  cors(
+    {
+      origin: ["http://localhost:5173", "https://course-gpt-ai.web.app"],
+      credentials: true,
+    } // Allow credentials
+  )
+);
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://course-gpt-ai.web.app",
+];
 app.use(express.json());
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Credentials", true);
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
-  );
-  res.setHeader(
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.header("Access-Control-Allow-Origin", origin);
+  }
+
+  res.header(
     "Access-Control-Allow-Headers",
-    "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
   );
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(200); // Preflight request
+  }
+
   next();
 });
-
 app.get("/", (req, res) => {
   res.send("Backend");
 });

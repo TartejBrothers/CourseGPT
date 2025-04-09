@@ -93,7 +93,7 @@ const AddModule: React.FC<AddModuleProps> = ({ isVisible, onClose }) => {
   return (
     <div className="popup-overlay" onClick={onClose}>
       <div
-        className="popup-content bg-white p-6 rounded-2xl w-[90vw] max-w-xl shadow-xl max-h-[80vh] overflow-y-scroll"
+        className="popup-content bg-white p-6 rounded-2xl w-[90vw] max-w-xl shadow-xl max-h-[80vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
         <h2 className="text-xl font-semibold mb-4">Create Module</h2>
