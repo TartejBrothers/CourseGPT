@@ -9,7 +9,10 @@ import ModuleList from "../elements/modulelist";
 export default function ModuleOrganizer() {
   const [showAddModule, setShowAddModule] = useState(false);
   const [modules, setModules] = useState([]);
+  const [filteredModules, setFilteredModules] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+
   const getModules = async () => {
     const Base_URL = import.meta.env.VITE_BASE_URL;
     try {
@@ -20,15 +23,36 @@ export default function ModuleOrganizer() {
         },
       });
       setModules(response.data.modules);
+      setFilteredModules(response.data.modules);
     } catch (error) {
       console.error("Error fetching modules:", error);
     } finally {
       setIsLoading(false);
     }
   };
+
   useEffect(() => {
     getModules();
   }, []);
+
+  useEffect(() => {
+    const query = searchQuery.toLowerCase();
+
+    const filtered = modules.filter((mod) => {
+      const nameMatch = mod.name.toLowerCase().includes(query);
+      const tagMatch = mod.tags.some((tag) =>
+        tag.toLowerCase().includes(query)
+      );
+      const lessonMatch = mod.lessons.some((lesson) =>
+        lesson.lessonHeading.toLowerCase().includes(query)
+      );
+
+      return nameMatch || tagMatch || lessonMatch;
+    });
+
+    setFilteredModules(filtered);
+  }, [searchQuery, modules]);
+
   return (
     <div className="space-y-8">
       <AddModule
@@ -66,10 +90,12 @@ export default function ModuleOrganizer() {
             type="text"
             placeholder="Search for Module Name, Tags or Lessons"
             className="focus:outline-none focus:ring-0 focus:border-0 w-full"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
 
-        <ModuleList modules={modules} />
+        <ModuleList modules={filteredModules} />
       </motion.div>
     </div>
   );
