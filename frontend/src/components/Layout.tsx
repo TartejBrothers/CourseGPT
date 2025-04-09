@@ -11,17 +11,22 @@ import {
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 import logo from "../assets/icons/logo.svg";
+import { useNavigate } from "react-router-dom";
 interface LayoutProps {
   children: React.ReactNode;
 }
 
 import Cookies from "js-cookie";
+
+import { MdOutlineDashboard } from "react-icons/md";
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isDark, setIsDark] = useState(false);
-
+  const navigate = useNavigate();
+  const notify = (message: string) => toast.error(message);
   const navItems = [
+    { icon: MdOutlineDashboard, label: "Dashboard", href: "/dashboard" },
     { icon: BookOpenIcon, label: "Lessons", href: "/lessons" },
     { icon: Squares2X2Icon, label: "Modules", href: "/modules" },
     { icon: DocumentTextIcon, label: "Editor", href: "/editor" },
@@ -29,11 +34,25 @@ const Navigation = () => {
   const [cookies, setCookies] = useState<string | undefined>(undefined);
   useEffect(() => {
     const token = Cookies.get("token");
-    setCookies(token);
+
+    if (
+      !token &&
+      window.location.pathname !== "/login" &&
+      window.location.pathname !== "/signup" &&
+      window.location.pathname !== "/"
+    ) {
+      notify("Please login to access this page");
+      setTimeout(() => {
+        navigate("/login");
+      }, 2500);
+    } else {
+      setCookies(token);
+    }
   }, [cookies, setCookies]);
 
   return (
     <>
+      <ToastContainer />
       <motion.nav
         initial={{ y: -100 }}
         animate={{ y: 0 }}

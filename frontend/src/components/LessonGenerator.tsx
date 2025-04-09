@@ -8,6 +8,7 @@ import {
 import type { Lesson } from "../types";
 import axios from "axios";
 import "../styles/response.css";
+import LessonsList from "../elements/lessonslist";
 import Cookies from "js-cookie";
 export default function LessonGenerator() {
   const [topic, setTopic] = useState("");
@@ -82,14 +83,14 @@ export default function LessonGenerator() {
                 className="inline-flex items-center px-6 py-2 border border-transparent rounded-xl shadow-sm text-sm font-medium text-secondary-900 bg-primary-500 hover:bg-primary-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <SparklesIcon className="h-4 w-4 mr-2" />
-                Generate Lesson
+                {isGenerating ? "Generating..." : "Generate Lesson"}
               </motion.button>
             </div>
           </div>
         </div>
       </motion.div>
 
-      {cleanedHTML && (
+      {cleanedHTML ? (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -100,6 +101,8 @@ export default function LessonGenerator() {
             className="responsetext"
           />
         </motion.div>
+      ) : (
+        <LessonsList count={1000} header="Generated Lessons" />
       )}
     </div>
   );

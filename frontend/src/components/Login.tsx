@@ -36,7 +36,7 @@ export default function LoginPage() {
         }
       );
       Cookies.set("token", response.data.token);
-      notify("Login Successful! Redirecting to dashboard");
+      notify("Login Successful!");
 
       setTimeout(() => {
         window.location.href = "/dashboard";
