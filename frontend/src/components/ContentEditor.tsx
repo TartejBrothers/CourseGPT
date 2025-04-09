@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+import axios from "axios";
+import Cookies from "js-cookie";
 import {
   BoldIcon,
   DocumentIcon,
@@ -32,6 +34,7 @@ const MenuBar = ({
 
   return (
     <div className="flex flex-wrap items-center gap-2 border-b border-secondary-200 p-4">
+      {/* Formatting Buttons */}
       <motion.button
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
@@ -42,6 +45,8 @@ const MenuBar = ({
       >
         <BoldIcon className="h-5 w-5" />
       </motion.button>
+
+      {/* ... Other Buttons ... */}
       <motion.button
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
@@ -85,6 +90,7 @@ const MenuBar = ({
 
       <motion.div className="flex-1" />
 
+      {/* Action Buttons */}
       <div className="flex gap-5">
         <motion.button
           onClick={onRegenerate}
@@ -131,45 +137,120 @@ export default function ContentEditor() {
         <li>And more!</li>
       </ul>
     `,
-    onUpdate: ({ editor }) => {
+  });
+
+  // Track selection change
+  useEffect(() => {
+    if (!editor) return;
+
+    const updateSelection = () => {
       const { from, to } = editor.state.selection;
       const text = editor.state.doc.textBetween(from, to, " ");
       setSelectedText(text.trim());
-      console.log("Selected text:", text.trim());
-    },
-  });
+    };
 
-  const onRephrase = () => {
-    alert(`Rephrasing:\n"${selectedText}"`);
+    editor.on("selectionUpdate", updateSelection);
+
+    return () => {
+      editor.off("selectionUpdate", updateSelection);
+    };
+  }, [editor]);
+  function cleanHtmlString(raw: string) {
+    return raw
+      .replace(/^```html\s*/, "") // Remove ```html from the beginning
+      .replace(/```$/, "") // Remove ``` from the end
+      .replace(/\n/g, ""); // Remove all newline characters
+  }
+  const Base_URL = import.meta.env.VITE_BASE_URL;
+  const [updatedText, setUpdatedText] = useState("");
+  const onRephrase = async () => {
+    try {
+      const response = await axios.post(
+        `${Base_URL}/api/editor/rephrase`,
+        { text: selectedText },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${Cookies.get("token")}`,
+          },
+        }
+      );
+      setUpdatedText(cleanHtmlString(response.data.output));
+    } catch (error) {
+      console.error("Error rephrasing text:", error);
+    }
   };
 
-  const onRegenerate = () => {
-    alert(`Regenerating:\n"${selectedText}"`);
+  const onRegenerate = async () => {
+    try {
+      const response = await axios.post(
+        `${Base_URL}/api/editor/regenerate`,
+        { text: selectedText },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${Cookies.get("token")}`,
+          },
+        }
+      );
+      setUpdatedText(cleanHtmlString(response.data.output));
+    } catch (error) {
+      console.error("Error regenerating text:", error);
+    }
   };
 
-  const onSummarize = () => {
-    alert(`Summarizing:\n"${selectedText}"`);
+  const onSummarize = async () => {
+    try {
+      const response = await axios.post(
+        `${Base_URL}/api/editor/summarize`,
+        { text: selectedText },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${Cookies.get("token")}`,
+          },
+        }
+      );
+      setUpdatedText(cleanHtmlString(response.data.output));
+    } catch (error) {
+      console.error("Error summarizing text:", error);
+    }
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: -20 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="bg-white rounded-2xl shadow-sm overflow-hidden"
-    >
-      <MenuBar
-        editor={editor}
-        selectedText={selectedText}
-        onRephrase={onRephrase}
-        onRegenerate={onRegenerate}
-        onSummarize={onSummarize}
-      />
-      <div className="p-6">
-        <EditorContent
+    <>
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="bg-white rounded-2xl shadow-sm overflow-hidden"
+      >
+        <MenuBar
           editor={editor}
-          className="focus:outline-none border border-gray-500  prose max-w-none text-black caret-black responsetext w-full overflow-x-hidden"
+          selectedText={selectedText}
+          onRephrase={onRephrase}
+          onRegenerate={onRegenerate}
+          onSummarize={onSummarize}
         />
-      </div>
-    </motion.div>
+        <div className="p-6">
+          <EditorContent
+            editor={editor}
+            className="focus:outline-none border border-gray-500 prose max-w-none text-black caret-black responsetext w-full overflow-x-hidden"
+          />
+        </div>
+      </motion.div>
+      <motion.div className="bg-white rounded-2xl shadow-sm overflow-hidden mt-6">
+        {updatedText && (
+          <div className="p-6">
+            <h3 className="text-3xl mb-3 font-bold text-center">
+              Updated Text
+            </h3>
+            <div
+              className="responsetext border border-gray-500 scrollbar-hide overflow-x-hidden"
+              dangerouslySetInnerHTML={{ __html: updatedText }}
+            />
+          </div>
+        )}
+      </motion.div>
+    </>
   );
 }
