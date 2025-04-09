@@ -8,6 +8,7 @@ import {
 import type { Lesson } from "../types";
 import axios from "axios";
 import "../styles/response.css";
+import Cookies from "js-cookie";
 export default function LessonGenerator() {
   const [topic, setTopic] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -27,9 +28,11 @@ export default function LessonGenerator() {
       const response = await axios.post(
         `${Base_URL}/api/ai/lesson`,
         { topic },
+
         {
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${Cookies.get("token")}`,
           },
         }
       );
@@ -62,13 +65,13 @@ export default function LessonGenerator() {
             >
               What topic would you like to create a lesson for?
             </label>
-            <div className="mt-2 flex gap-4">
+            <div className="md:flex-row flex-col mt-2 flex gap-4 ">
               <input
                 type="text"
                 id="topic"
                 value={topic}
                 onChange={(e) => setTopic(e.target.value)}
-                className="flex-1 rounded-xl border border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 px-2"
+                className="flex-1 rounded-xl border border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 px-2 min-h-[38px]"
                 placeholder="e.g., React Hooks, TypeScript Generics"
               />
               <motion.button
