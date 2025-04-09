@@ -23,12 +23,14 @@ const MenuBar = ({
   onRephrase,
   onRegenerate,
   onSummarize,
+  isLoading,
 }: {
   editor: any;
   selectedText: string;
   onRephrase: () => void;
   onRegenerate: () => void;
   onSummarize: () => void;
+  isLoading: boolean;
 }) => {
   if (!editor) return null;
 
@@ -94,32 +96,44 @@ const MenuBar = ({
         <motion.div className="flex-1" />
       </div>
       {/* Action Buttons */}
-      <div className="flex gap-5">
+      {isLoading ? (
         <motion.button
           onClick={onRegenerate}
           whileHover={{ scale: 1.05 }}
-          className="flex items-center gap-1 px-3 py-1 text-sm bg-primary-500 hover:bg-primary-400 py-2 rounded-xl"
+          disabled={isLoading}
+          className="flex items-center gap-1 px-3 py-1 text-sm bg-primary-500 hover:bg-primary-400 py-2 rounded-xl disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          <ArrowPathIcon className="h-4 w-4" />
-          Regenerate
+          <SparklesIcon className="h-4 w-4 mr-2" />
+          Generating
         </motion.button>
-        <motion.button
-          onClick={onRephrase}
-          whileHover={{ scale: 1.05 }}
-          className="flex items-center gap-1 px-3 py-1 text-sm bg-primary-500 hover:bg-primary-400 py-2 rounded-xl"
-        >
-          <ArrowsRightLeftIcon className="h-4 w-4" />
-          Rephrase
-        </motion.button>
-        <motion.button
-          onClick={onSummarize}
-          whileHover={{ scale: 1.05 }}
-          className="flex items-center gap-1 px-3 py-1 text-sm bg-primary-500 hover:bg-primary-400 py-2 rounded-xl"
-        >
-          <SparklesIcon className="h-4 w-4" />
-          Summarize
-        </motion.button>
-      </div>
+      ) : (
+        <div className="flex gap-5">
+          <motion.button
+            onClick={onRegenerate}
+            whileHover={{ scale: 1.05 }}
+            className="flex items-center gap-1 px-3 py-1 text-sm bg-primary-500 hover:bg-primary-400 py-2 rounded-xl"
+          >
+            <ArrowPathIcon className="h-4 w-4" />
+            Regenerate
+          </motion.button>
+          <motion.button
+            onClick={onRephrase}
+            whileHover={{ scale: 1.05 }}
+            className="flex items-center gap-1 px-3 py-1 text-sm bg-primary-500 hover:bg-primary-400 py-2 rounded-xl"
+          >
+            <ArrowsRightLeftIcon className="h-4 w-4" />
+            Rephrase
+          </motion.button>
+          <motion.button
+            onClick={onSummarize}
+            whileHover={{ scale: 1.05 }}
+            className="flex items-center gap-1 px-3 py-1 text-sm bg-primary-500 hover:bg-primary-400 py-2 rounded-xl"
+          >
+            <SparklesIcon className="h-4 w-4" />
+            Summarize
+          </motion.button>
+        </div>
+      )}
     </div>
   );
 };
@@ -245,6 +259,7 @@ export default function ContentEditor() {
           onRephrase={onRephrase}
           onRegenerate={onRegenerate}
           onSummarize={onSummarize}
+          isLoading={isLoading}
         />
         <div className="p-6">
           <EditorContent
