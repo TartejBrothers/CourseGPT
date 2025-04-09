@@ -7,6 +7,7 @@ import {
   XMarkIcon,
   SunIcon,
   MoonIcon,
+  UserIcon,
 } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -21,6 +22,7 @@ interface LayoutProps {
 import Cookies from "js-cookie";
 
 import { MdOutlineDashboard } from "react-icons/md";
+import { LuLogOut } from "react-icons/lu";
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
@@ -31,10 +33,18 @@ const Navigation = () => {
     { icon: Squares2X2Icon, label: "Modules", href: "/modules" },
     { icon: DocumentTextIcon, label: "Editor", href: "/editor" },
   ];
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+
   const [cookies, setCookies] = useState<string | undefined>(undefined);
+  const handleLogout = () => {
+    Cookies.remove("token");
+    toast.success("Logged out successfully");
+    setTimeout(() => {
+      window.location.href = "/";
+    }, 1500);
+  };
   useEffect(() => {
     const token = Cookies.get("token");
-
     if (
       !token &&
       window.location.pathname !== "/login" &&
@@ -86,6 +96,31 @@ const Navigation = () => {
                       {item.label}
                     </motion.a>
                   ))}
+                  <div className="relative">
+                    <UserIcon
+                      onClick={() => setIsUserMenuOpen((prev) => !prev)}
+                      className="h-5 w-5 text-secondary-600 hover:text-secondary-900 cursor-pointer"
+                    />
+                    <AnimatePresence>
+                      {isUserMenuOpen && (
+                        <motion.div
+                          initial={{ opacity: 0, y: -10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          transition={{ duration: 0.2 }}
+                          className="absolute right-[-30px] mt-2 w-28 bg-white border border-gray-200 rounded shadow-md z-50"
+                        >
+                          <button
+                            onClick={handleLogout}
+                            className="w-full text-cebter px-2 py-2 text-sm text-gray-700 hover:bg-gray-100 flex justify-center items-center gap-2"
+                          >
+                            <LuLogOut />
+                            Logout
+                          </button>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
                 </>
               ) : (
                 <Link
@@ -132,17 +167,26 @@ const Navigation = () => {
             className="md:hidden fixed inset-0 z-40 bg-white"
           >
             <div className="pt-20 pb-3 space-y-1 flex flex-col items-center">
-              {navItems.map((item) => (
-                <motion.a
-                  key={item.label}
-                  whileHover={{ x: 10 }}
-                  href={item.href}
-                  className="text-secondary-600 hover:text-secondary-900 block px-3 py-2 rounded-md text-base font-medium"
+              <>
+                {navItems.map((item) => (
+                  <motion.a
+                    key={item.label}
+                    whileHover={{ x: 10 }}
+                    href={item.href}
+                    className="text-secondary-600 hover:text-secondary-900 block px-3 py-2 rounded-md text-base font-medium"
+                  >
+                    <item.icon className="h-5 w-5 inline-block mr-2" />
+                    {item.label}
+                  </motion.a>
+                ))}
+                <button
+                  onClick={handleLogout}
+                  className=" text-cebter px-2 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
                 >
-                  <item.icon className="h-5 w-5 inline-block mr-2" />
-                  {item.label}
-                </motion.a>
-              ))}
+                  <LuLogOut />
+                  Logout
+                </button>
+              </>
             </div>
           </motion.div>
         )}
