@@ -28,6 +28,7 @@ app.get("/", (req, res) => {
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/ai", require("./routes/ai"));
 app.use("/api/module", require("./routes/module"));
+app.use("/api/editor", require("./routes/editor"));
 
 const connectDB = async () => {
   try {
