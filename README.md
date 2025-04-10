@@ -5,7 +5,7 @@ This is a full-stack web application built with:
 - **Frontend**: React (Vite) + Tailwind CSS + Framer Motion + Heroicons
 - **Backend**: Node.js + Express + MongoDB (Mongoose)
 - **Authentication**: JWT-based with cookies
-- **Deployment options**: Firebase Hosting / Azure App Service / Vercel (frontend), Azure (backend)
+- **Deployment options**: Firebase Hosting (frontend), Azure (backend)
 
 ---
 
