@@ -25,7 +25,7 @@ This is a full-stack web application built with:
 │   ├── models/
 │   ├── controllers/
 │   ├── .env
-│   └── server.js
+│   └── index.js
 ├── README.md
 └── .gitignore
 ```
@@ -114,7 +114,7 @@ JWT_SECRET=your_jwt_secret_key
 ### Run the backend:
 
 ```bash
-node server.js
+node index.js
 ```
 
 - API will run at `http://localhost:5001`
